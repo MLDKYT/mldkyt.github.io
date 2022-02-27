@@ -29,15 +29,52 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>MLDKYT's website - Loading...</title>
+  <title>MLDKYT's website</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Styling for loading indicator -->
+  <style>
+    @keyframes spinner {
+      0% {
+        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+      }
+      100% {
+        transform: translate3d(-50%, -50%, 0) rotate(360deg);
+      }
+    }
+    #loading-div::before {
+      animation: .75s linear infinite spinner;
+      animation-play-state: inherit;
+      border: solid 5px #d4d4d4;
+      border-bottom-color: #ec3737;
+      border-radius: 50%;
+      content: "";
+      height: 40px;
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      transform: translate3d(-50%, -50%, 0);
+      width: 40px;
+      will-change: transform;
+    }
+    
+    #loading-div {
+      left: 50%;
+      top: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 <body>
+  <div id="loading-div">
+  </div>
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
-    var serviceWorkerVersion = '1611316394';
+    var serviceWorkerVersion = '2217120627';
     var scriptLoaded = false;
     function loadMainDartJs() {
       if (scriptLoaded) {
