@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!--
+  <head>
+    <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,132 +14,169 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="/">
+    <base href="/" />
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="MLDKYT's website.">
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="A new Flutter project." />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="MLDKYT's website">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="MLDKYT's website" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>MLDKYT's website</title>
-  <link rel="manifest" href="manifest.json">
+    <title>MLDKYT's website</title>
+    <link rel="manifest" href="manifest.json" />
 
-  <!-- Styling for loading indicator -->
-  <style>
-    @keyframes spinner {
-      0% {
-        transform: translate3d(-50%, -50%, 0) rotate(0deg);
+    <!-- Styling for loading indicator -->
+    <style>
+      @keyframes spinner {
+        0% {
+          transform: translate3d(-50%, -50%, 0) rotate(0deg);
+        }
+        100% {
+          transform: translate3d(-50%, -50%, 0) rotate(360deg);
+        }
       }
-      100% {
-        transform: translate3d(-50%, -50%, 0) rotate(360deg);
+      #loading-div::before {
+        animation: 0.75s linear infinite spinner;
+        animation-play-state: inherit;
+        border: solid 5px #d4d4d4;
+        border-bottom-color: #ec3737;
+        border-radius: 50%;
+        content: "";
+        height: 40px;
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        transform: translate3d(-50%, -50%, 0);
+        width: 40px;
+        will-change: transform;
       }
-    }
-    #loading-div::before {
-      animation: .75s linear infinite spinner;
-      animation-play-state: inherit;
-      border: solid 5px #d4d4d4;
-      border-bottom-color: #ec3737;
-      border-radius: 50%;
-      content: "";
-      height: 40px;
-      position: absolute;
-      top: 10%;
-      left: 10%;
-      transform: translate3d(-50%, -50%, 0);
-      width: 40px;
-      will-change: transform;
-    }
-    
-    #loading-div {
-      left: 50%;
-      top: 50%;
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-  </style>
-</head>
-<body>
-  <div id="loading-div">
-  </div>
 
-  <!-- This script installs service_worker.js to provide PWA functionality to
+      #loading-div {
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-div"></div>
+
+    <div id="errors"></div>
+
+    <noscript>
+      <h1>JavaScript is disabled.</h1>
+    </noscript>
+
+    <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-<<<<<<< HEAD
-    var serviceWorkerVersion = '2217120627';
-=======
-    var serviceWorkerVersion = '260579235';
->>>>>>> 70fbd4697e63b2588c668942b2b4e487d7e87143
-    var scriptLoaded = false;
-    function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-    }
-
-    if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing || reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
-
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
+    <script>
+      // https://stackoverflow.com/questions/47879864/how-can-i-check-if-a-browser-supports-webassembly
+      // Thanks!
+      const wasmSupported = (() => {
+        try {
+          if (
+            typeof WebAssembly === "object" &&
+            typeof WebAssembly.instantiate === "function"
+          ) {
+            const module = new WebAssembly.Module(
+              Uint8Array.of(0x0, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00)
             );
-            loadMainDartJs();
+            if (module instanceof WebAssembly.Module)
+              return (
+                new WebAssembly.Instance(module) instanceof WebAssembly.Instance
+              );
           }
-        }, 4000);
-      });
-    } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
-    }
-  </script>
-</body>
+        } catch (e) {}
+        return false;
+      })();
+      
+      if (!wasmSupported) {
+        let errorsDoc = document.getElementById("errors")
+        let errorTitle = document.createElement("h1")
+        errorTitle.innerText = "Unsupported browser."
+        let errorDetail = document.createElement("p")
+        errorDetail.innerText = "WebAssembly (WASM) is not supported in your browser.\n" +
+        "On MS Edge, you need to go to the browser flags and enable it from there.\n" +
+        "If you're on messenger on mobile, you can try hitting the 3 dots in the right corner\n" +
+        "and tapping \"Open in <BROWSER>\"."
+        errorsDoc.append(errorTitle)
+        errorsDoc.append(errorDetail)
+        return
+      }
+
+      try {
+        var serviceWorkerVersion = '1521831418';
+        var scriptLoaded = false;
+        function loadMainDartJs() {
+          if (scriptLoaded) {
+            return;
+          }
+          scriptLoaded = true;
+          var scriptTag = document.createElement("script");
+          scriptTag.src = "main.dart.js";
+          scriptTag.type = "application/javascript";
+          document.body.append(scriptTag);
+        }
+
+        if ("serviceWorker" in navigator) {
+          // Service workers are supported. Use them.
+          window.addEventListener("load", function () {
+            // Wait for registration to finish before dropping the <script> tag.
+            // Otherwise, the browser will load the script multiple times,
+            // potentially different versions.
+            var serviceWorkerUrl =
+              "flutter_service_worker.js?v=" + serviceWorkerVersion;
+            navigator.serviceWorker.register(serviceWorkerUrl).then((reg) => {
+              function waitForActivation(serviceWorker) {
+                serviceWorker.addEventListener("statechange", () => {
+                  if (serviceWorker.state == "activated") {
+                    console.log("Installed new service worker.");
+                    loadMainDartJs();
+                  }
+                });
+              }
+              if (!reg.active && (reg.installing || reg.waiting)) {
+                // No active web worker and we have installed or are installing
+                // one for the first time. Simply wait for it to activate.
+                waitForActivation(reg.installing || reg.waiting);
+              } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+                // When the app updates the serviceWorkerVersion changes, so we
+                // need to ask the service worker to update.
+                console.log("New service worker available.");
+                reg.update();
+                waitForActivation(reg.installing);
+              } else {
+                // Existing service worker is still good.
+                console.log("Loading app from service worker.");
+                loadMainDartJs();
+              }
+            });
+
+            // If service worker doesn't succeed in a reasonable amount of time,
+            // fallback to plaint <script> tag.
+            setTimeout(() => {
+              if (!scriptLoaded) {
+                console.warn(
+                  "Failed to load app from service worker. Falling back to plain <script> tag."
+                );
+                loadMainDartJs();
+              }
+            }, 4000);
+          });
+        } else {
+          // Service workers not supported. Just drop the <script> tag.
+          loadMainDartJs();
+        }
+      } catch (e) {}
+    </script>
+  </body>
 </html>
